@@ -1,0 +1,9 @@
+services:
+  forum-db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=forumproject
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+    ports:
+      - "5432:5432"
