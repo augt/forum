@@ -6,6 +6,7 @@ import { dataSourceOptions } from 'db/data-source';
 import { UsersModule } from './users/users.module';
 import { PublicationsModule } from './publications/publications.module';
 import { CommentsModule } from './comments/comments.module';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { CommentsModule } from './comments/comments.module';
     UsersModule,
     PublicationsModule,
     CommentsModule,
+    LikesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

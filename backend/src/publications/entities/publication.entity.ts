@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Like } from 'src/likes/entities/like.entity';
 
 @Entity()
 export class Publication {
@@ -28,7 +29,14 @@ export class Publication {
   @ManyToOne(() => User, (user) => user.publications)
   user: User;
 
-  @OneToMany(() => Comment, (comment) => comment.publication)
+  @OneToMany(() => Like, (like) => like.publication, {
+    onDelete: 'CASCADE',
+  })
+  likes: Like[];
+
+  @OneToMany(() => Comment, (comment) => comment.publication, {
+    onDelete: 'CASCADE',
+  })
   comments: Comment[];
 
   @CreateDateColumn()

@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Like } from 'src/likes/entities/like.entity';
 
 @Entity()
 export class User {
@@ -30,11 +31,20 @@ export class User {
   })
   password: string;
 
-  @OneToMany(() => Publication, (publication) => publication.user)
+  @OneToMany(() => Publication, (publication) => publication.user, {
+    onDelete: 'CASCADE',
+  })
   publications: Publication[];
 
-  @OneToMany(() => Comment, (comment) => comment.user)
+  @OneToMany(() => Comment, (comment) => comment.user, {
+    onDelete: 'CASCADE',
+  })
   comments: Comment[];
+
+  @OneToMany(() => Like, (like) => like.user, {
+    onDelete: 'CASCADE',
+  })
+  likes: Like[];
 
   @CreateDateColumn()
   createdAt: Date;
