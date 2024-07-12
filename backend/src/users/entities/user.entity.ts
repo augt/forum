@@ -13,10 +13,11 @@ import { Like } from 'src/likes/entities/like.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  userId: string;
 
   @Column({
     type: 'varchar',
+    unique: true,
   })
   username: string;
 
@@ -49,6 +50,6 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ nullable: true, default: () => 'NULL' })
   updatedAt: Date;
 }

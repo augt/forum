@@ -28,6 +28,6 @@ export class Comment {
   @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ nullable: true, default: () => 'NULL' })
   updatedAt: Date;
 }
