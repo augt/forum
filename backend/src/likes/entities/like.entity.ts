@@ -15,9 +15,13 @@ export class Like {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => User, (user) => user.likes)
+  @ManyToOne(() => User, (user) => user.likes, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 
-  @ManyToOne(() => Publication, (publication) => publication.likes)
+  @ManyToOne(() => Publication, (publication) => publication.likes, {
+    onDelete: 'CASCADE',
+  })
   publication: Publication;
 }

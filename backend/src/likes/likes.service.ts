@@ -1,26 +1,82 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateLikeDto } from './dto/create-like.dto';
-import { UpdateLikeDto } from './dto/update-like.dto';
+import { Like } from './entities/like.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class LikesService {
-  create(createLikeDto: CreateLikeDto) {
-    return 'This action adds a new like';
+  constructor(
+    @InjectRepository(Like)
+    private likesRepository: Repository<Like>,
+  ) {}
+  async createLike(req, createLikeDto: CreateLikeDto) {
+    try {
+      const newLike = this.likesRepository.create({
+        user: req.user.id,
+        publication: { id: createLikeDto.publication },
+      });
+
+      await this.preventUserLikingTwicePublication(
+        req.user.id,
+        createLikeDto.publication,
+      );
+
+      return await this.likesRepository.save(newLike);
+    } catch (error) {
+      throw error;
+    }
   }
 
-  findAll() {
-    return `This action returns all likes`;
+  async preventUserLikingTwicePublication(
+    userId: string,
+    publicationId: string,
+  ) {
+    const formerLike = await this.likesRepository.findOne({
+      where: {
+        user: {
+          id: userId,
+        },
+        publication: { id: publicationId },
+      },
+    });
+    if (formerLike) throw new ForbiddenException();
+    return;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} like`;
+  async findOneById(id: string) {
+    try {
+      const like = await this.likesRepository.findOne({
+        where: {
+          id,
+        },
+        relations: {
+          user: true,
+        },
+        select: {
+          user: {
+            id: true,
+          },
+        },
+      });
+      if (!like) throw new NotFoundException();
+      return like;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  update(id: number, updateLikeDto: UpdateLikeDto) {
-    return `This action updates a #${id} like`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} like`;
+  async removeLike(req, id: string) {
+    try {
+      const like = await this.findOneById(id);
+      if (req.user.id !== like.user.id) throw new ForbiddenException();
+      return await this.likesRepository.remove(like);
+    } catch (error) {
+      throw error;
+    }
   }
 }

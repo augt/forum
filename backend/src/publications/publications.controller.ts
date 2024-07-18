@@ -1,34 +1,55 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Request,
+  Param,
+  Delete,
+  UseGuards,
+  Put,
+} from '@nestjs/common';
 import { PublicationsService } from './publications.service';
 import { CreatePublicationDto } from './dto/create-publication.dto';
 import { UpdatePublicationDto } from './dto/update-publication.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('publications')
 export class PublicationsController {
   constructor(private readonly publicationsService: PublicationsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createPublicationDto: CreatePublicationDto) {
-    return this.publicationsService.create(createPublicationDto);
+  create(@Request() req, @Body() createPublicationDto: CreatePublicationDto) {
+    return this.publicationsService.createPublication(
+      req,
+      createPublicationDto,
+    );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
-    return this.publicationsService.findAll();
+    return this.publicationsService.findAllPublications();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.publicationsService.findOne(+id);
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
+  update(
+    @Request() req,
+    @Param('id') id: string,
+    @Body() updatePublicationDto: UpdatePublicationDto,
+  ) {
+    return this.publicationsService.updatePublication(
+      req,
+      id,
+      updatePublicationDto,
+    );
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePublicationDto: UpdatePublicationDto) {
-    return this.publicationsService.update(+id, updatePublicationDto);
-  }
-
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.publicationsService.remove(+id);
+  remove(@Request() req, @Param('id') id: string) {
+    return this.publicationsService.removePublication(req, id);
   }
 }

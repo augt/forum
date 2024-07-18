@@ -1,11 +1,13 @@
 import {
   Controller,
+  Get,
   Post,
   Body,
   Put,
   UseGuards,
   Request,
   Delete,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,16 +26,23 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get()
+  async getUser(@Request() req) {
+    const user = await this.usersService.findOneById(req.user.id);
+    if (!user) throw new UnauthorizedException();
+    return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Put()
   async updateUser(@Body() updateUserDto: UpdateUserDto, @Request() req) {
-    await this.usersService.updateUser(updateUserDto, req);
-    return { msg: 'user updated' };
+    return await this.usersService.updateUser(updateUserDto, req);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete()
   async deleteUser(@Request() req) {
-    await this.usersService.deleteUser(req.user.userId);
+    await this.usersService.deleteUser(req.user.id);
     return { msg: 'user deleted' };
   }
 }

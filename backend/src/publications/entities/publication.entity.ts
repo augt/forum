@@ -19,14 +19,23 @@ export class Publication {
   @Column({
     type: 'varchar',
   })
-  text: string;
+  title: string;
 
   @Column({
     type: 'varchar',
   })
+  text: string;
+
+  @Column({
+    type: 'varchar',
+    nullable: true,
+    default: () => 'NULL',
+  })
   image: string;
 
-  @ManyToOne(() => User, (user) => user.publications)
+  @ManyToOne(() => User, (user) => user.publications, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 
   @OneToMany(() => Like, (like) => like.publication, {

@@ -13,7 +13,7 @@ import { Like } from 'src/likes/entities/like.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  userId: string;
+  id: string;
 
   @Column({
     type: 'varchar',
@@ -32,19 +32,13 @@ export class User {
   })
   password: string;
 
-  @OneToMany(() => Publication, (publication) => publication.user, {
-    onDelete: 'CASCADE',
-  })
+  @OneToMany(() => Publication, (publication) => publication.user)
   publications: Publication[];
 
-  @OneToMany(() => Comment, (comment) => comment.user, {
-    onDelete: 'CASCADE',
-  })
+  @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
 
-  @OneToMany(() => Like, (like) => like.user, {
-    onDelete: 'CASCADE',
-  })
+  @OneToMany(() => Like, (like) => like.user)
   likes: Like[];
 
   @CreateDateColumn()

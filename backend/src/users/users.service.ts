@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,13 +13,17 @@ export class UsersService {
   ) {}
 
   async findOneByEmail(email: string) {
-    return this.usersRepository.findOneBy({ email });
+    try {
+      return await this.usersRepository.findOneBy({ email });
+    } catch (error) {
+      throw error;
+    }
   }
 
-  async findOneById(userId: string) {
+  async findOneById(id: string) {
     try {
-      const user = await this.usersRepository.findOneBy({ userId });
-      if (!user) throw new NotFoundException();
+      const user = await this.usersRepository.findOneBy({ id });
+      if (user) delete user.password;
       return user;
     } catch (error) {
       throw error;
@@ -49,7 +49,7 @@ export class UsersService {
 
   async updateUser(updateUserDto: UpdateUserDto, req) {
     try {
-      const user = await this.findOneById(req.user.userId);
+      const user = await this.findOneById(req.user.id);
       if (updateUserDto.password) {
         await hash(updateUserDto.password, 10).then((hash) => {
           updateUserDto.password = hash;
@@ -57,19 +57,20 @@ export class UsersService {
       }
 
       const updatedUser = { ...user, ...updateUserDto };
-
-      return this.usersRepository.save(updatedUser);
+      const savedUser = await this.usersRepository.save(updatedUser);
+      delete savedUser.password;
+      return savedUser;
     } catch (error) {
-      throw error;
+      throw new BadRequestException();
     }
   }
 
-  async deleteUser(userId: string) {
+  async deleteUser(id: string) {
     try {
-      const user = await this.findOneById(userId);
-      return this.usersRepository.remove(user);
+      const user = await this.findOneById(id);
+      return await this.usersRepository.remove(user);
     } catch (error) {
-      throw error;
+      throw new BadRequestException();
     }
   }
 }
