@@ -1,12 +1,14 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
+
+const configService = new ConfigService();
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: 'password',
-  database: 'forumproject',
+  url: configService.get<string>(
+    'POSTGRES_URL',
+    'postgres://postgres:password@localhost:5432/forumproject',
+  ),
   entities: ['dist/**/*.entity.js'],
   synchronize: true,
   migrations: ['dist/db/migrations/*js'],
