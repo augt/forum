@@ -10,7 +10,9 @@ import {
 export default function Header() {
   return (
     <StyledHeader>
-      <StyledH1>Forum</StyledH1>
+      <StyledH1>
+        <Link href="/">Forum</Link>
+      </StyledH1>
       <StyledNav>
         <StyledUl>
           <li>

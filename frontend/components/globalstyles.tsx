@@ -6,8 +6,19 @@ const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.colors.primary};
     padding: 0;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-size: ${({ theme }) => theme.fontSizes.normal};
+    font-weight: 400;
+  }
+
+  main {
+    padding: 0 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 0 20px;
+  }
   }
 
   a {

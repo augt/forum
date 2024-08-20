@@ -9,5 +9,10 @@ declare module "styled-components" {
     breakpoints: {
       mobile: number;
     };
+    fontSizes: {
+      normal: string;
+      big: string;
+      small: string;
+    };
   }
 }
