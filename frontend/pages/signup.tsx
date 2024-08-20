@@ -1,21 +1,21 @@
 import SignInSignUpForm from "@/components/molecules/SignInSignUpForm";
 import axios from "axios";
+import Head from "next/head";
 import { useState } from "react";
 
 export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState("");
   async function handleSignUpClick(
-    username: string,
     email: string,
-    password: string
+    password: string,
+    username?: string
   ) {
     try {
-      const response = await axios.post("http://localhost:3000/users/signup", {
+      const response = await axios.post("http://localhost:3001/users/signup", {
         username,
         email,
         password,
       });
-      console.log(response);
       if (response.status === 201)
         setErrorMessage(
           "Utilisateur créé, rendez-vous sur la page de connexion !"
@@ -25,12 +25,17 @@ export default function SignUp() {
     }
   }
   return (
-    <main>
-      <SignInSignUpForm
-        handleSubmit={handleSignUpClick}
-        errorMessage={errorMessage}
-        isUserNamefieldActivated={true}
-      />
-    </main>
+    <>
+      <Head>
+        <title>Forum - Inscription</title>
+      </Head>
+      <main>
+        <SignInSignUpForm
+          handleSubmit={handleSignUpClick}
+          errorMessage={errorMessage}
+          isUsernamefieldActivated={true}
+        />
+      </main>
+    </>
   );
 }

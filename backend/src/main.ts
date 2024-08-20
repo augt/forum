@@ -11,6 +11,6 @@ async function bootstrap() {
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
 
-  await app.listen(configService.get<number>('API_PORT', 3000));
+  await app.listen(configService.get<number>('API_PORT', 3001));
 }
 bootstrap();
