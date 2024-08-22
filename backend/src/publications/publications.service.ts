@@ -38,18 +38,31 @@ export class PublicationsService {
       },
       relations: {
         user: true,
-        comments: true,
-        likes: true,
+        comments: {
+          user: true,
+        },
+        likes: {
+          user: true,
+        },
       },
       select: {
         user: {
+          id: true,
           username: true,
         },
         comments: {
+          id: true,
+          text: true,
           user: {
+            id: true,
             username: true,
           },
-          text: true,
+        },
+        likes: {
+          id: true,
+          user: {
+            id: true,
+          },
         },
       },
     });

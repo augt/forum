@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     align-items: center;
 
-    @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0 20px;
   }
   }

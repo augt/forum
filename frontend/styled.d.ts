@@ -5,9 +5,10 @@ declare module "styled-components" {
     colors: {
       primary: string;
       secondary: string;
+      tertiary: string;
     };
     breakpoints: {
-      mobile: number;
+      mobile: string;
     };
     fontSizes: {
       normal: string;

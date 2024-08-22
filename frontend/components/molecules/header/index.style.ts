@@ -7,8 +7,9 @@ export const StyledHeader = styled.header`
   align-items: center;
   justify-content: space-between;
 
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0 20px;
+    flex-direction: column;
   }
 `;
 
@@ -16,6 +17,7 @@ export const StyledH1 = styled.h1`
   margin: 26px 0;
   color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.big};
+  font-weight: 700;
 `;
 
 export const StyledNav = styled.nav``;
@@ -24,6 +26,10 @@ export const StyledUl = styled.ul`
   display: flex;
   align-items: center;
   gap: 20px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 0;
+  }
 `;
 
 export const StyledLink = styled(Link)`

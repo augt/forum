@@ -10,6 +10,8 @@ export const StyledButton = styled.button`
   width: 100%;
   transition: all 300ms;
   font-size: ${({ theme }) => theme.fontSizes.normal};
+  white-space: nowrap;
+  height: fit-content;
 
   &:hover {
     cursor: pointer;
