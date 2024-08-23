@@ -7,11 +7,14 @@ export const StyledButton = styled.button`
   border-radius: 5px;
   border: none;
   margin: 5px;
-  width: 100%;
+  width: fit-content;
+  height: fit-content;
   transition: all 300ms;
   font-size: ${({ theme }) => theme.fontSizes.normal};
   white-space: nowrap;
-  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     cursor: pointer;

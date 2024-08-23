@@ -42,7 +42,10 @@ export default function Home() {
         {authToken === "" ? (
           <SitePresentation />
         ) : (
-          <PublicationsList publications={publications} />
+          <PublicationsList
+            publications={publications}
+            setPublications={setPublications}
+          />
         )}
       </main>
     </>

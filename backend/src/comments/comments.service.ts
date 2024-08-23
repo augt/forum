@@ -20,7 +20,7 @@ export class CommentsService {
   async createComment(req, createCommentDto: CreateCommentDto) {
     try {
       const newComment = this.commentsRepository.create({
-        user: req.user.id,
+        user: { id: req.user.id },
         publication: { id: createCommentDto.publication },
         text: createCommentDto.text,
       });

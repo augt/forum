@@ -22,6 +22,7 @@ export const Title = styled.div`
 
 export const TextContent = styled.div`
   margin-bottom: 20px;
+  white-space: pre-line;
 `;
 
 export const PublicationEndingBlock = styled.div`
@@ -30,6 +31,7 @@ export const PublicationEndingBlock = styled.div`
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     flex-direction: column-reverse;
+    gap: 5px;
   }
 `;
 
@@ -50,6 +52,12 @@ export const EndingBlockLeftSide = styled.div`
   }
 `;
 
+export const InteractionIconsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
 export const AuthorAndCreationDate = styled.div`
   display: flex;
   flex-direction: column;
@@ -60,5 +68,3 @@ export const AuthorAndCreationDate = styled.div`
     width: fit-content;
   }
 `;
-
-export const modificationDate = styled.div``;

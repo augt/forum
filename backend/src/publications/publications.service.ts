@@ -20,7 +20,7 @@ export class PublicationsService {
   async createPublication(req, createPublicationDto: CreatePublicationDto) {
     try {
       const newPublication = this.publicationsRepository.create({
-        user: req.user.id,
+        user: { id: req.user.id },
         title: createPublicationDto.title,
         text: createPublicationDto.text,
       });

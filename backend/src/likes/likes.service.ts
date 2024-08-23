@@ -17,7 +17,7 @@ export class LikesService {
   async createLike(req, createLikeDto: CreateLikeDto) {
     try {
       const newLike = this.likesRepository.create({
-        user: req.user.id,
+        user: { id: req.user.id },
         publication: { id: createLikeDto.publication },
       });
 
