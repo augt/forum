@@ -87,6 +87,30 @@ export default function PublicationsList({
       console.log(error);
     }
   }
+
+  async function deletePublication(publicationId: string) {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/publications/${publicationId}`,
+
+        {
+          headers: { Authorization: "Bearer " + authToken },
+        }
+      );
+
+      if (response.status === 200) {
+        publications.splice(
+          publications.findIndex(
+            (publication) => publication.id === publicationId
+          ),
+          1
+        );
+        setPublications([...publications]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <PublicationsListContainer>
       {publications.map((publication, index) => (
@@ -124,7 +148,12 @@ export default function PublicationsList({
                   <StyledButton>
                     <EditIcon />
                   </StyledButton>
-                  <StyledButton>
+                  <StyledButton
+                    onClick={(e) => {
+                      e.preventDefault();
+                      deletePublication(publication.id);
+                    }}
+                  >
                     <DeleteForeverIcon />
                   </StyledButton>
                 </>

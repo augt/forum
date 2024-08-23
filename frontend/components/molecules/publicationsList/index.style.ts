@@ -4,13 +4,12 @@ export const PublicationsListContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 30px;
 `;
 
 export const PublicationContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.tertiary};
   width: 100%;
-  margin-bottom: 20px;
   border-radius: 5px;
   padding: 20px 30px;
 `;
