@@ -6,6 +6,7 @@ declare module "styled-components" {
       primary: string;
       secondary: string;
       tertiary: string;
+      white: string;
     };
     breakpoints: {
       mobile: string;

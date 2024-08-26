@@ -2,7 +2,6 @@ import { PublicationType } from "@/components/dataTypes";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { GreetingMessage, StyledForm, TitleTextInput } from "./index.style";
 import { ConnectedUserContext } from "@/components/Context";
-import { StyledInput } from "@/components/atoms/input/index.style";
 import { StyledButton } from "@/components/atoms/button/index.style";
 import PublishIcon from "@mui/icons-material/Publish";
 import axios from "axios";

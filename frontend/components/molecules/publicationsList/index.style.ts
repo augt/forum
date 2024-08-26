@@ -36,6 +36,7 @@ export const PublicationEndingBlock = styled.div`
 
 export const ButtonsBlock = styled.div`
   display: flex;
+  gap: 10px;
 `;
 
 export const EndingBlockLeftSide = styled.div`

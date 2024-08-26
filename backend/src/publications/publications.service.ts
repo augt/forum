@@ -35,6 +35,9 @@ export class PublicationsService {
     return await this.publicationsRepository.find({
       order: {
         createdAt: 'DESC',
+        comments: {
+          createdAt: 'ASC',
+        },
       },
       relations: {
         user: true,
@@ -57,6 +60,8 @@ export class PublicationsService {
             id: true,
             username: true,
           },
+          createdAt: true,
+          updatedAt: true,
         },
         likes: {
           id: true,

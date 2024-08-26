@@ -13,6 +13,7 @@ const theme: DefaultTheme = {
     primary: "#111",
     secondary: "#0070f3",
     tertiary: "#f2f2f2",
+    white: "#FFFFFF",
   },
   breakpoints: {
     mobile: "501px",

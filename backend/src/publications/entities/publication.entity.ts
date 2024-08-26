@@ -48,9 +48,13 @@ export class Publication {
   })
   comments: Comment[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @UpdateDateColumn({ nullable: true, default: () => 'NULL' })
+  @UpdateDateColumn({
+    type: 'timestamptz',
+    nullable: true,
+    default: () => 'NULL',
+  })
   updatedAt: Date;
 }

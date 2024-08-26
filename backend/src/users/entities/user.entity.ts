@@ -41,9 +41,13 @@ export class User {
   @OneToMany(() => Like, (like) => like.user)
   likes: Like[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @UpdateDateColumn({ nullable: true, default: () => 'NULL' })
+  @UpdateDateColumn({
+    type: 'timestamptz',
+    nullable: true,
+    default: () => 'NULL',
+  })
   updatedAt: Date;
 }

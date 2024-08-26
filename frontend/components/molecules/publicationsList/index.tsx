@@ -18,9 +18,11 @@ import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { ConnectedUserContext } from "@/components/Context";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useTheme } from "styled-components";
 import axios from "axios";
+import CommentsList from "../commentsList";
+import CreateCommentForm from "../createCommentForm";
 
 export type PublicationsListProps = {
   publications: PublicationType[];
@@ -33,6 +35,9 @@ export default function PublicationsList({
 }: PublicationsListProps) {
   const theme = useTheme();
   const { connectedUser, authToken } = useContext(ConnectedUserContext);
+  const bidule = publications.map(() => false);
+  const [arrayIsCommentsListOpen, setArrayIsCommentsListOpen] =
+    useState(bidule);
 
   function isLikedByConnectedUser(
     publication: PublicationType,
@@ -137,7 +142,13 @@ export default function PublicationsList({
                   <div>{publication.likes.length}</div>
                 </InteractionIconsContainer>
               </StyledButton>
-              <StyledButton>
+              <StyledButton
+                onClick={() => {
+                  arrayIsCommentsListOpen[index] =
+                    !arrayIsCommentsListOpen[index];
+                  setArrayIsCommentsListOpen([...arrayIsCommentsListOpen]);
+                }}
+              >
                 <InteractionIconsContainer>
                   <ChatBubbleIcon />
                   <div>{publication.comments.length}</div>
@@ -179,6 +190,22 @@ export default function PublicationsList({
               )}
             </EndingBlockLeftSide>
           </PublicationEndingBlock>
+
+          {arrayIsCommentsListOpen[index] && (
+            <>
+              <CreateCommentForm
+                publications={publications}
+                setPublications={setPublications}
+                publicationId={publication.id}
+              />
+              <CommentsList
+                comments={publication.comments}
+                publications={publications}
+                setPublications={setPublications}
+                publicationId={publication.id}
+              ></CommentsList>
+            </>
+          )}
         </PublicationContainer>
       ))}
     </PublicationsListContainer>
