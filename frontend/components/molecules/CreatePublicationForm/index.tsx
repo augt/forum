@@ -2,10 +2,10 @@ import { PublicationType } from "@/components/dataTypes";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { GreetingMessage, StyledForm, TitleTextInput } from "./index.style";
 import { ConnectedUserContext } from "@/components/Context";
-import { StyledButton } from "@/components/atoms/button/index.style";
+import { StyledButton } from "@/components/atoms/Button/index.style";
 import PublishIcon from "@mui/icons-material/Publish";
 import axios from "axios";
-import { StyledTextArea } from "@/components/atoms/textArea/index.style";
+import { StyledTextArea } from "@/components/atoms/TextArea/index.style";
 
 export type CreatePublicationFormProps = {
   publications: PublicationType[];

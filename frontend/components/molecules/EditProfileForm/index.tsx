@@ -1,4 +1,4 @@
-import { StyledInput } from "@/components/atoms/input/index.style";
+import { StyledInput } from "@/components/atoms/Input/index.style";
 import { InputContainer, StyledForm } from "./index.style";
 import { useContext, useState } from "react";
 import { ConnectedUserContext } from "@/components/Context";
@@ -6,7 +6,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import axios from "axios";
-import { StyledButton } from "@/components/atoms/button/index.style";
+import { StyledButton } from "@/components/atoms/Button/index.style";
 
 export default function EditProfileForm() {
   const { connectedUser, authToken, setConnectedUser } =

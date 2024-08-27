@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { InputContainer, StyledForm } from "./index.style";
-import { StyledButton } from "@/components/atoms/button/index.style";
-import { StyledInput } from "@/components/atoms/input/index.style";
+import { StyledButton } from "@/components/atoms/Button/index.style";
+import { StyledInput } from "@/components/atoms/Input/index.style";
 
 type PropsTypes = {
   handleSubmit: (email: string, password: string, username?: string) => void;

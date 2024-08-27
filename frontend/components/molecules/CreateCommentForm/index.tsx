@@ -1,7 +1,7 @@
-import { StyledTextArea } from "@/components/atoms/textArea/index.style";
+import { StyledTextArea } from "@/components/atoms/TextArea/index.style";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { StyledForm } from "./index.style";
-import { StyledButton } from "@/components/atoms/button/index.style";
+import { StyledButton } from "@/components/atoms/Button/index.style";
 import PublishIcon from "@mui/icons-material/Publish";
 import axios from "axios";
 import { ConnectedUserContext } from "@/components/Context";

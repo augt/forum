@@ -11,7 +11,7 @@ import {
 } from "./index.style";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
-import { StyledButton } from "@/components/atoms/button/index.style";
+import { StyledButton } from "@/components/atoms/Button/index.style";
 import { Dispatch, SetStateAction, useContext } from "react";
 import { ConnectedUserContext } from "@/components/Context";
 import axios from "axios";

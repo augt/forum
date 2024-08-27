@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import { ThemeProvider, type DefaultTheme } from "styled-components";
 import GlobalStyle from "@/components/globalstyles";
 import { Roboto } from "next/font/google";
-import Header from "@/components/molecules/header";
+import Header from "@/components/molecules/Header";
 import { ConnectedUserContext } from "@/components/Context";
 import { useEffect, useState } from "react";
 import { getCookie, setCookie } from "cookies-next";

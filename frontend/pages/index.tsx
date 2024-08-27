@@ -1,14 +1,12 @@
 import Head from "next/head";
 import { setCookie } from "cookies-next";
-import { Fragment, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
 import SitePresentation from "@/components/molecules/SitePresentation";
 import axios from "axios";
 import { ConnectedUserContext } from "@/components/Context";
-import Publication from "@/components/molecules/publicationsList";
 import { PublicationType } from "@/components/dataTypes";
-import PublicationsList from "@/components/molecules/publicationsList";
-import { CreatePublicationForm } from "@/components/molecules/createPublicationForm";
+import PublicationsList from "@/components/molecules/PublicationsList";
+import { CreatePublicationForm } from "@/components/molecules/CreatePublicationForm";
 
 export default function Home() {
   const { authToken } = useContext(ConnectedUserContext);

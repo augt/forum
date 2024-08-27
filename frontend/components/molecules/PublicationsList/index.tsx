@@ -12,7 +12,7 @@ import {
   TextContent,
   Title,
 } from "./index.style";
-import { StyledButton } from "@/components/atoms/button/index.style";
+import { StyledButton } from "@/components/atoms/Button/index.style";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import EditIcon from "@mui/icons-material/Edit";
@@ -21,8 +21,8 @@ import { ConnectedUserContext } from "@/components/Context";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useTheme } from "styled-components";
 import axios from "axios";
-import CommentsList from "../commentsList";
-import CreateCommentForm from "../createCommentForm";
+import CommentsList from "../CommentsList";
+import CreateCommentForm from "../CreateCommentForm";
 
 export type PublicationsListProps = {
   publications: PublicationType[];

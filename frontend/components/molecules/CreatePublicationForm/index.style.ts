@@ -1,4 +1,4 @@
-import { StyledInput } from "@/components/atoms/input/index.style";
+import { StyledInput } from "@/components/atoms/Input/index.style";
 import styled from "styled-components";
 
 export const StyledForm = styled.form`
