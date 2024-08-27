@@ -38,3 +38,11 @@ export const StyledLink = styled(Link)`
     color: ${({ theme }) => theme.colors.secondary};
   }
 `;
+
+export const StyledLi = styled.li`
+  transition: all 300ms;
+  &:hover {
+    color: ${({ theme }) => theme.colors.secondary};
+    cursor: pointer;
+  }
+`;

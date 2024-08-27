@@ -11,6 +11,7 @@ export const StyledButton = styled.button`
   transition: all 300ms;
   font-size: ${({ theme }) => theme.fontSizes.normal};
   white-space: nowrap;
+  gap: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
