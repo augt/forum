@@ -23,6 +23,7 @@ import { useTheme } from "styled-components";
 import axios from "axios";
 import CommentsList from "../CommentsList";
 import CreateCommentForm from "../CreateCommentForm";
+import Popin from "../Popin";
 
 export type PublicationsListProps = {
   publications: PublicationType[];
@@ -35,9 +36,10 @@ export default function PublicationsList({
 }: PublicationsListProps) {
   const theme = useTheme();
   const { connectedUser, authToken } = useContext(ConnectedUserContext);
-  const bidule = publications.map(() => false);
-  const [arrayIsCommentsListOpen, setArrayIsCommentsListOpen] =
-    useState(bidule);
+  const [arrayIsCommentsListOpen, setArrayIsCommentsListOpen] = useState(
+    publications.map(() => false)
+  );
+  const [isEditing, setIsEditing] = useState(false);
 
   function isLikedByConnectedUser(
     publication: PublicationType,
@@ -117,97 +119,106 @@ export default function PublicationsList({
     }
   }
   return (
-    <PublicationsListContainer>
-      {publications.map((publication, index) => (
-        <PublicationContainer key={index}>
-          <Title>{publication.title}</Title>
-          <TextContent>{publication.text}</TextContent>
-          <PublicationEndingBlock>
-            <ButtonsBlock>
-              <StyledButton
-                onClick={() => {
-                  isLikedByConnectedUser(publication, connectedUser)
-                    ? deleteLike(publication.likes, publication.id)
-                    : createLike(publication.id);
-                }}
-              >
-                <InteractionIconsContainer>
-                  <ThumbUpIcon
-                    htmlColor={
-                      isLikedByConnectedUser(publication, connectedUser)
-                        ? theme.colors.primary
-                        : undefined
-                    }
-                  />
-                  <div>{publication.likes.length}</div>
-                </InteractionIconsContainer>
-              </StyledButton>
-              <StyledButton
-                onClick={() => {
-                  arrayIsCommentsListOpen[index] =
-                    !arrayIsCommentsListOpen[index];
-                  setArrayIsCommentsListOpen([...arrayIsCommentsListOpen]);
-                }}
-              >
-                <InteractionIconsContainer>
-                  <ChatBubbleIcon />
-                  <div>{publication.comments.length}</div>
-                </InteractionIconsContainer>
-              </StyledButton>
-              {connectedUser.id === publication.user.id && (
-                <>
-                  <StyledButton>
-                    <EditIcon />
-                  </StyledButton>
-                  <StyledButton
-                    onClick={(e) => {
-                      e.preventDefault();
-                      deletePublication(publication.id);
-                    }}
-                  >
-                    <DeleteForeverIcon />
-                  </StyledButton>
-                </>
-              )}
-            </ButtonsBlock>
-            <EndingBlockLeftSide>
-              <AuthorAndCreationDate>
-                <div>{publication.user.username}</div>
-                <div>
-                  {dayjs(publication.createdAt)
-                    .locale("fr")
-                    .format("DD MMMM YYYY à HH:mm")}
-                </div>
-              </AuthorAndCreationDate>
+    <>
+      <PublicationsListContainer>
+        {publications.map((publication, index) => (
+          <PublicationContainer key={index}>
+            <Title>{publication.title}</Title>
+            <TextContent>{publication.text}</TextContent>
+            <PublicationEndingBlock>
+              <ButtonsBlock>
+                <StyledButton
+                  onClick={() => {
+                    isLikedByConnectedUser(publication, connectedUser)
+                      ? deleteLike(publication.likes, publication.id)
+                      : createLike(publication.id);
+                  }}
+                >
+                  <InteractionIconsContainer>
+                    <ThumbUpIcon
+                      htmlColor={
+                        isLikedByConnectedUser(publication, connectedUser)
+                          ? theme.colors.primary
+                          : undefined
+                      }
+                    />
+                    <div>{publication.likes.length}</div>
+                  </InteractionIconsContainer>
+                </StyledButton>
+                <StyledButton
+                  onClick={() => {
+                    arrayIsCommentsListOpen[index] =
+                      !arrayIsCommentsListOpen[index];
+                    setArrayIsCommentsListOpen([...arrayIsCommentsListOpen]);
+                  }}
+                >
+                  <InteractionIconsContainer>
+                    <ChatBubbleIcon />
+                    <div>{publication.comments.length}</div>
+                  </InteractionIconsContainer>
+                </StyledButton>
+                {connectedUser.id === publication.user.id && (
+                  <>
+                    <StyledButton
+                      onClick={() => {
+                        setIsEditing(!isEditing);
+                      }}
+                    >
+                      <EditIcon />
+                    </StyledButton>
+                    <StyledButton
+                      onClick={(e) => {
+                        e.preventDefault();
+                        deletePublication(publication.id);
+                      }}
+                    >
+                      <DeleteForeverIcon />
+                    </StyledButton>
+                  </>
+                )}
+              </ButtonsBlock>
+              <EndingBlockLeftSide>
+                <AuthorAndCreationDate>
+                  <div>{publication.user.username}</div>
+                  <div>
+                    {dayjs(publication.createdAt)
+                      .locale("fr")
+                      .format("DD MMMM YYYY à HH:mm")}
+                  </div>
+                </AuthorAndCreationDate>
 
-              {publication.updatedAt && (
-                <div>
-                  modifié le{" "}
-                  {dayjs(publication.updatedAt)
-                    .locale("fr")
-                    .format("DD MMMM YYYY à HH:mm")}
-                </div>
-              )}
-            </EndingBlockLeftSide>
-          </PublicationEndingBlock>
+                {publication.updatedAt && (
+                  <div>
+                    modifié le{" "}
+                    {dayjs(publication.updatedAt)
+                      .locale("fr")
+                      .format("DD MMMM YYYY à HH:mm")}
+                  </div>
+                )}
+              </EndingBlockLeftSide>
+            </PublicationEndingBlock>
 
-          {arrayIsCommentsListOpen[index] && (
-            <>
-              <CreateCommentForm
-                publications={publications}
-                setPublications={setPublications}
-                publicationId={publication.id}
-              />
-              <CommentsList
-                comments={publication.comments}
-                publications={publications}
-                setPublications={setPublications}
-                publicationId={publication.id}
-              ></CommentsList>
-            </>
-          )}
-        </PublicationContainer>
-      ))}
-    </PublicationsListContainer>
+            {arrayIsCommentsListOpen[index] && (
+              <>
+                <CreateCommentForm
+                  publications={publications}
+                  setPublications={setPublications}
+                  publicationId={publication.id}
+                />
+                <CommentsList
+                  comments={publication.comments}
+                  publications={publications}
+                  setPublications={setPublications}
+                  publicationId={publication.id}
+                ></CommentsList>
+              </>
+            )}
+          </PublicationContainer>
+        ))}
+      </PublicationsListContainer>
+      {isEditing && (
+        <Popin setIsEditing={setIsEditing} onClose={() => {}}></Popin>
+      )}
+    </>
   );
 }
