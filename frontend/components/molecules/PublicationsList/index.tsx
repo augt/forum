@@ -40,6 +40,7 @@ export default function PublicationsList({
     publications.map(() => false)
   );
   const [isEditing, setIsEditing] = useState(false);
+  const [publicationToEdit, setPublicationToEdit] = useState<PublicationType>();
 
   function isLikedByConnectedUser(
     publication: PublicationType,
@@ -161,6 +162,7 @@ export default function PublicationsList({
                   <>
                     <StyledButton
                       onClick={() => {
+                        setPublicationToEdit(publication);
                         setIsEditing(!isEditing);
                       }}
                     >
@@ -217,7 +219,15 @@ export default function PublicationsList({
         ))}
       </PublicationsListContainer>
       {isEditing && (
-        <Popin setIsEditing={setIsEditing} onClose={() => {}}></Popin>
+        <Popin
+          onClose={() => {
+            setIsEditing(false);
+            setPublicationToEdit(undefined);
+          }}
+          publicationToEdit={publicationToEdit}
+          setPublications={setPublications}
+          publications={publications}
+        ></Popin>
       )}
     </>
   );

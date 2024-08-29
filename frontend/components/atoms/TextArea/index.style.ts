@@ -10,4 +10,5 @@ export const StyledTextArea = styled(TextareaAutosize)`
   resize: none;
   width: 100%;
   min-height: 70px;
+  padding: 5px;
 `;

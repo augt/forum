@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { ThemeProvider, type DefaultTheme } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import GlobalStyle from "@/components/globalstyles";
 import { Roboto } from "next/font/google";
 import Header from "@/components/molecules/Header";
@@ -7,23 +7,8 @@ import { ConnectedUserContext } from "@/components/Context";
 import { useEffect, useState } from "react";
 import { getCookie, setCookie } from "cookies-next";
 import axios from "axios";
+import { theme } from "@/components/theme";
 
-const theme: DefaultTheme = {
-  colors: {
-    primary: "#111",
-    secondary: "#0070f3",
-    tertiary: "#f2f2f2",
-    white: "#FFFFFF",
-  },
-  breakpoints: {
-    mobile: "501px",
-  },
-  fontSizes: {
-    normal: "18px",
-    big: "40px",
-    small: "13px",
-  },
-};
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "700"],

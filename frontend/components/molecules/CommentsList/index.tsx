@@ -12,9 +12,10 @@ import {
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import { StyledButton } from "@/components/atoms/Button/index.style";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { ConnectedUserContext } from "@/components/Context";
 import axios from "axios";
+import Popin from "../Popin";
 
 export type CommentsListProps = {
   comments: CommentType[];
@@ -30,6 +31,8 @@ export default function CommentsList({
   publicationId,
 }: CommentsListProps) {
   const { connectedUser, authToken } = useContext(ConnectedUserContext);
+  const [isEditing, setIsEditing] = useState(false);
+  const [commentToEdit, setCommentToEdit] = useState<CommentType>();
 
   async function deleteComment(commentId: string, publicationId: string) {
     try {
@@ -55,45 +58,63 @@ export default function CommentsList({
     }
   }
   return (
-    <CommentsListContainer>
-      {comments.map((comment, index) => (
-        <CommentContainer key={index}>
-          <CommentText>{comment.text}</CommentText>
+    <>
+      <CommentsListContainer>
+        {comments.map((comment, index) => (
+          <CommentContainer key={index}>
+            <CommentText>{comment.text}</CommentText>
 
-          <CommentLowerBlock>
-            <CommentInfos>
-              <div>{comment.user.username}</div>
-              <div>
-                {dayjs(comment.createdAt)
-                  .locale("fr")
-                  .format("DD MMMM YYYY à HH:mm")}
-              </div>
-              {comment.updatedAt && (
+            <CommentLowerBlock>
+              <CommentInfos>
+                <div>{comment.user.username}</div>
                 <div>
-                  Modifié le{" "}
-                  {dayjs(comment.updatedAt)
+                  {dayjs(comment.createdAt)
                     .locale("fr")
                     .format("DD MMMM YYYY à HH:mm")}
                 </div>
+                {comment.updatedAt && (
+                  <div>
+                    Modifié le{" "}
+                    {dayjs(comment.updatedAt)
+                      .locale("fr")
+                      .format("DD MMMM YYYY à HH:mm")}
+                  </div>
+                )}
+              </CommentInfos>
+              {comment.user.id === connectedUser.id && (
+                <ButtonsGroup>
+                  <StyledButton
+                    onClick={() => {
+                      setCommentToEdit(comment);
+                      setIsEditing(!isEditing);
+                    }}
+                  >
+                    <EditIcon />
+                  </StyledButton>
+                  <StyledButton
+                    onClick={() => {
+                      deleteComment(comment.id, publicationId);
+                    }}
+                  >
+                    <DeleteForeverIcon />
+                  </StyledButton>
+                </ButtonsGroup>
               )}
-            </CommentInfos>
-            {comment.user.id === connectedUser.id && (
-              <ButtonsGroup>
-                <StyledButton>
-                  <EditIcon />
-                </StyledButton>
-                <StyledButton
-                  onClick={() => {
-                    deleteComment(comment.id, publicationId);
-                  }}
-                >
-                  <DeleteForeverIcon />
-                </StyledButton>
-              </ButtonsGroup>
-            )}
-          </CommentLowerBlock>
-        </CommentContainer>
-      ))}
-    </CommentsListContainer>
+            </CommentLowerBlock>
+          </CommentContainer>
+        ))}
+      </CommentsListContainer>
+      {isEditing && (
+        <Popin
+          onClose={() => {
+            setIsEditing(false);
+            setCommentToEdit(undefined);
+          }}
+          commentToEdit={commentToEdit}
+          setPublications={setPublications}
+          publications={publications}
+        ></Popin>
+      )}
+    </>
   );
 }
