@@ -13,10 +13,15 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   async function handleLoginClick(email: string, password: string) {
     try {
-      const response = await axios.post("http://localhost:3001/auth/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
       if (response.status === 200) {
         setCookie("ForumAuthToken", response.data.access_token);
         setAuthToken(response.data.access_token);

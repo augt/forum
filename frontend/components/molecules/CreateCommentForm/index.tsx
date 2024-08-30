@@ -24,7 +24,9 @@ export default function CreateCommentForm({
   async function createComment(commentText: string, publicationId: string) {
     try {
       const response = await axios.post(
-        "http://localhost:3001/comments",
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/comments`,
         {
           publication: publicationId,
           text: commentText,

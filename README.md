@@ -4,6 +4,8 @@ This projet is a simple forum application, where users can sign up, sign in and 
 
 This application is build with NextJS and styled-components on the front-end and uses NestJS with typeORM, postgreSQL and Docker on the back-end.
 
+You can easily try out this project on your computer locally, provided you have Node.js and Docker installed.
+
 ### Installation instructions :
 
 - [ ] `Node.js` and `docker` must be installed locally on your machine.

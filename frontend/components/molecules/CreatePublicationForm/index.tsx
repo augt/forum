@@ -26,7 +26,9 @@ export function CreatePublicationForm({
   ) {
     try {
       const response = await axios.post(
-        "http://localhost:3001/publications",
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/publications`,
         {
           title: publicationTitle,
           text: publicationText,

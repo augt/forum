@@ -15,9 +15,14 @@ export default function Home() {
 
   async function fetchPublications(authToken: string) {
     try {
-      const response = await axios.get("http://localhost:3001/publications/", {
-        headers: { Authorization: "Bearer " + authToken },
-      });
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/publications/`,
+        {
+          headers: { Authorization: "Bearer " + authToken },
+        }
+      );
       if (response) setPublications(response.data);
     } catch (error: any) {
       if (error.response.status === 401) {

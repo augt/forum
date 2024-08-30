@@ -22,7 +22,9 @@ export default function EditProfileForm() {
   ) {
     try {
       const response = await axios.put(
-        "http://localhost:3001/users",
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/users`,
         {
           username: newUsername ? newUsername : undefined,
           email: newEmail ? newEmail : undefined,

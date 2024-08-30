@@ -52,7 +52,9 @@ export default function PublicationsList({
   async function createLike(publicationId: string) {
     try {
       const response = await axios.post(
-        "http://localhost:3001/likes",
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/likes`,
         {
           publication: publicationId,
         },
@@ -75,7 +77,9 @@ export default function PublicationsList({
     const likeId = likes.find((like) => like.user.id === connectedUser.id)?.id;
     try {
       const response = await axios.delete(
-        `http://localhost:3001/likes/${likeId}`,
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/likes/${likeId}`,
 
         {
           headers: { Authorization: "Bearer " + authToken },
@@ -99,7 +103,9 @@ export default function PublicationsList({
   async function deletePublication(publicationId: string) {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/publications/${publicationId}`,
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/publications/${publicationId}`,
 
         {
           headers: { Authorization: "Bearer " + authToken },

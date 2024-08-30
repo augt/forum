@@ -11,11 +11,16 @@ export default function SignUp() {
     username?: string
   ) {
     try {
-      const response = await axios.post("http://localhost:3001/users/signup", {
-        username,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/users/signup`,
+        {
+          username,
+          email,
+          password,
+        }
+      );
       if (response.status === 201)
         setErrorMessage(
           "Utilisateur créé, rendez-vous sur la page de connexion !"

@@ -22,9 +22,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
   async function getUserInfo() {
     try {
-      const response = await axios.get("http://localhost:3001/users", {
-        headers: { Authorization: "Bearer " + token },
-      });
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/users`,
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      );
       if (response) {
         setConnectedUser(response.data);
         setIsUserConnected(true);

@@ -37,7 +37,9 @@ export default function CommentsList({
   async function deleteComment(commentId: string, publicationId: string) {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/comments/${commentId}`,
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/comments/${commentId}`,
 
         {
           headers: { Authorization: "Bearer " + authToken },

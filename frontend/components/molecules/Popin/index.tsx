@@ -40,7 +40,9 @@ export default function Popin({
   ) {
     try {
       const response = await axios.put(
-        `http://localhost:3001/publications/${publicationId}`,
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/publications/${publicationId}`,
         {
           title: newTitle ? newTitle : undefined,
           text: newText ? newText : undefined,
@@ -73,7 +75,9 @@ export default function Popin({
   async function saveModifiedComment(commentId: string, newText: string) {
     try {
       const response = await axios.put(
-        `http://localhost:3001/comments/${commentId}`,
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/comments/${commentId}`,
         {
           title: newTitle ? newTitle : undefined,
           text: newText ? newText : undefined,
