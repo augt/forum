@@ -55,9 +55,6 @@ export default function Popin({
       if (response.status === 200) {
         const updatedPublication = response.data;
 
-        updatedPublication.likes = [];
-        updatedPublication.comments = [];
-        updatedPublication.user.username = connectedUser.username;
         publications.splice(
           publications.findIndex(
             (publication) => publication.id === publicationId

@@ -81,10 +81,38 @@ export class PublicationsService {
         },
         relations: {
           user: true,
+          comments: {
+            user: true,
+          },
+          likes: {
+            user: true,
+          },
         },
         select: {
           user: {
             id: true,
+            username: true,
+          },
+          comments: {
+            id: true,
+            text: true,
+            user: {
+              id: true,
+              username: true,
+            },
+            createdAt: true,
+            updatedAt: true,
+          },
+          likes: {
+            id: true,
+            user: {
+              id: true,
+            },
+          },
+        },
+        order: {
+          comments: {
+            createdAt: 'ASC',
           },
         },
       });
