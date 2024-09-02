@@ -10,7 +10,7 @@ export const dataSourceOptions: DataSourceOptions = {
     'postgres://postgres:password@localhost:5432/forumproject',
   ),
   entities: ['dist/**/*.entity.js'],
-  synchronize: true,
+  synchronize: false,
   migrations: ['dist/db/migrations/*js'],
 };
 
