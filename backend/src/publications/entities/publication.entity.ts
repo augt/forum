@@ -28,6 +28,11 @@ export class Publication {
 
   @Column({
     type: 'varchar',
+  })
+  group: string;
+
+  @Column({
+    type: 'varchar',
     nullable: true,
     default: () => 'NULL',
   })

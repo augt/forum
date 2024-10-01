@@ -45,6 +45,7 @@ export default function Login() {
         <SignInSignUpForm
           handleSubmit={handleLoginClick}
           errorMessage={errorMessage}
+          isLogInMode={true}
         />
       </main>
     </>

@@ -3,14 +3,23 @@ import { InputContainer, StyledForm } from "./index.style";
 import { useContext, useState } from "react";
 import { ConnectedUserContext } from "@/components/Context";
 import SaveIcon from "@mui/icons-material/Save";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import axios from "axios";
 import { StyledButton } from "@/components/atoms/Button/index.style";
+import { setCookie } from "cookies-next";
+import { useRouter } from "next/router";
 
 export default function EditProfileForm() {
-  const { connectedUser, authToken, setConnectedUser } =
-    useContext(ConnectedUserContext);
+  const router = useRouter();
+  const {
+    connectedUser,
+    authToken,
+    setConnectedUser,
+    setAuthToken,
+    setIsUserConnected,
+  } = useContext(ConnectedUserContext);
   const [newUsername, setNewUsername] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -36,6 +45,30 @@ export default function EditProfileForm() {
       );
 
       setConnectedUser(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function deleteUser() {
+    try {
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/users/`,
+
+        {
+          headers: { Authorization: "Bearer " + authToken },
+        }
+      );
+
+      if (response.status === 200) {
+        setCookie("ForumAuthToken", "");
+        setConnectedUser({});
+        setAuthToken("");
+        setIsUserConnected(false);
+        router.push("/");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -75,6 +108,7 @@ export default function EditProfileForm() {
           }}
         />
       </InputContainer>
+      <div>Groupe d&lsquo;utilisateurs : {connectedUser.group}</div>
       <div>
         Créé le{" "}
         {dayjs(connectedUser.createdAt)
@@ -97,6 +131,14 @@ export default function EditProfileForm() {
         }}
       >
         <SaveIcon /> <div>Enregistrer</div>
+      </StyledButton>
+      <StyledButton
+        onClick={(e) => {
+          e.preventDefault();
+          deleteUser();
+        }}
+      >
+        <DeleteForeverIcon /> <div>Supprimer</div>
       </StyledButton>
     </StyledForm>
   );
