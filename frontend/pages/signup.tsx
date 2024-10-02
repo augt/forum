@@ -8,7 +8,8 @@ export default function SignUp() {
   async function handleSignUpClick(
     email: string,
     password: string,
-    username?: string
+    username?: string,
+    group?: string
   ) {
     try {
       const response = await axios.post(
@@ -18,6 +19,7 @@ export default function SignUp() {
         {
           username,
           email,
+          group,
           password,
         }
       );
@@ -38,7 +40,6 @@ export default function SignUp() {
         <SignInSignUpForm
           handleSubmit={handleSignUpClick}
           errorMessage={errorMessage}
-          isUsernamefieldActivated={true}
         />
       </main>
     </>

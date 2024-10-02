@@ -32,6 +32,11 @@ export class User {
   })
   password: string;
 
+  @Column({
+    type: 'varchar',
+  })
+  group: string;
+
   @OneToMany(() => Publication, (publication) => publication.user)
   publications: Publication[];
 

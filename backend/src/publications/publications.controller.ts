@@ -29,8 +29,8 @@ export class PublicationsController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.publicationsService.findAllPublications();
+  findAll(@Request() req) {
+    return this.publicationsService.findAllPublications(req.user.id);
   }
 
   @UseGuards(JwtAuthGuard)

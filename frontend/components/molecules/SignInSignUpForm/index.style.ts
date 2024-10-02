@@ -11,3 +11,10 @@ export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const StyledInfoMessage = styled.div`
+  width: 300px;
+  font-size: ${({ theme }) => theme.fontSizes.small};
+  text-align: center;
+  margin-top: 10px;
+`;

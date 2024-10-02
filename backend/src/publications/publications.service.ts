@@ -9,20 +9,24 @@ import { UpdatePublicationDto } from './dto/update-publication.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Publication } from './entities/publication.entity';
 import { Repository } from 'typeorm';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class PublicationsService {
   constructor(
     @InjectRepository(Publication)
     private publicationsRepository: Repository<Publication>,
+    private usersService: UsersService,
   ) {}
 
   async createPublication(req, createPublicationDto: CreatePublicationDto) {
+    const user = await this.usersService.findOneById(req.user.id);
     try {
       const newPublication = this.publicationsRepository.create({
         user: { id: req.user.id },
         title: createPublicationDto.title,
         text: createPublicationDto.text,
+        group: user.group,
       });
 
       return await this.publicationsRepository.save(newPublication);
@@ -31,8 +35,10 @@ export class PublicationsService {
     }
   }
 
-  async findAllPublications() {
+  async findAllPublications(userId: string) {
+    const user = await this.usersService.findOneById(userId);
     return await this.publicationsRepository.find({
+      where: { group: user.group },
       order: {
         createdAt: 'DESC',
         comments: {

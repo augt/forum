@@ -10,6 +10,7 @@ export const Container = styled.div`
 
 export const WelcomeMessage = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.big};
+  text-align: center;
 `;
 export const StyledEm = styled.em`
   color: ${({ theme }) => theme.colors.secondary};

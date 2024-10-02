@@ -1,27 +1,33 @@
 import { useState } from "react";
-import { InputContainer, StyledForm } from "./index.style";
+import { InputContainer, StyledForm, StyledInfoMessage } from "./index.style";
 import { StyledButton } from "@/components/atoms/Button/index.style";
 import { StyledInput } from "@/components/atoms/Input/index.style";
 
 type PropsTypes = {
-  handleSubmit: (email: string, password: string, username?: string) => void;
+  handleSubmit: (
+    email: string,
+    password: string,
+    username?: string,
+    group?: string
+  ) => void;
   errorMessage: string;
-  isUsernamefieldActivated?: boolean;
+  isLogInMode?: boolean;
 };
 
 export default function SignInSignUpForm({
   handleSubmit,
   errorMessage,
-  isUsernamefieldActivated,
+  isLogInMode,
 }: PropsTypes) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [group, setGroup] = useState("");
 
   return (
     <>
       <StyledForm>
-        {isUsernamefieldActivated && (
+        {!isLogInMode && (
           <InputContainer>
             <label htmlFor="username">Pseudo</label>
             <StyledInput
@@ -29,6 +35,18 @@ export default function SignInSignUpForm({
               id="username"
               onChange={(event) => {
                 setUsername(event.target.value);
+              }}
+            />
+          </InputContainer>
+        )}
+        {!isLogInMode && (
+          <InputContainer>
+            <label htmlFor="group">Groupe à rejoindre</label>
+            <StyledInput
+              type="text"
+              id="group"
+              onChange={(event) => {
+                setGroup(event.target.value);
               }}
             />
           </InputContainer>
@@ -57,15 +75,30 @@ export default function SignInSignUpForm({
         <StyledButton
           onClick={(e) => {
             e.preventDefault();
-            isUsernamefieldActivated
-              ? handleSubmit(email, password, username)
-              : handleSubmit(email, password);
+            isLogInMode
+              ? handleSubmit(email, password)
+              : handleSubmit(email, password, username, group);
           }}
         >
-          {isUsernamefieldActivated ? "Inscription" : "Connexion"}
+          {isLogInMode ? "Connexion" : "Inscription"}
         </StyledButton>
       </StyledForm>
       <div>{errorMessage}</div>
+      {!isLogInMode && (
+        <>
+          <StyledInfoMessage>Informations utiles :</StyledInfoMessage>
+          <StyledInfoMessage>
+            Vous pouvez choisir le groupe que vous souhaitez, si celui
+            n&apos;existe pas encore, il sera créé automatiquement lors de votre
+            inscription.
+          </StyledInfoMessage>
+          <StyledInfoMessage>
+            Vous ne recevrez pas d&apos;email de cette application, il
+            n&apos;est donc pas nécessaire de renseigner une véritable adresse
+            email.
+          </StyledInfoMessage>
+        </>
+      )}
     </>
   );
 }
