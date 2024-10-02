@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { InputContainer, StyledForm } from "./index.style";
+import { InputContainer, StyledForm, StyledInfoMessage } from "./index.style";
 import { StyledButton } from "@/components/atoms/Button/index.style";
 import { StyledInput } from "@/components/atoms/Input/index.style";
 
@@ -84,6 +84,21 @@ export default function SignInSignUpForm({
         </StyledButton>
       </StyledForm>
       <div>{errorMessage}</div>
+      {!isLogInMode && (
+        <>
+          <StyledInfoMessage>Informations utiles :</StyledInfoMessage>
+          <StyledInfoMessage>
+            Vous pouvez choisir le groupe que vous souhaitez, si celui
+            n&apos;existe pas encore, il sera créé automatiquement lors de votre
+            inscription.
+          </StyledInfoMessage>
+          <StyledInfoMessage>
+            Vous ne recevrez pas d&apos;email de cette application, il
+            n&apos;est donc pas nécessaire de renseigner une véritable adresse
+            email.
+          </StyledInfoMessage>
+        </>
+      )}
     </>
   );
 }

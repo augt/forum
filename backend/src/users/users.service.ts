@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { hash } from 'bcrypt';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class UsersService {
@@ -72,5 +73,20 @@ export class UsersService {
     } catch (error) {
       throw new BadRequestException();
     }
+  }
+
+  @Cron(CronExpression.EVERY_30_MINUTES, { name: 'delete_old_users' })
+  async deleteOldUsers() {
+    const users = await this.usersRepository.find();
+    return await this.usersRepository.remove(users);
+    /* const currentDate = new Date();
+    const difference = currentDate.getMinutes() - 10;
+    currentDate.setMinutes(difference);
+    currentDate.toISOString();
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .delete()
+      .where('user.createdAt <= :currentDate', { currentDate })
+      .execute(); */
   }
 }
