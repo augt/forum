@@ -11,6 +11,7 @@ You can easily try out this project on your computer locally, provided you have 
 - [ ] `Node.js` and `docker` must be installed locally on your machine.
 - [ ] Clone the repo to your computer.
 - [ ] In a terminal window, navigate to the `/backend` folder of the projet.
+- [ ] at the root of the `/backend` folder, create a .env file and copy the content of .env.example on it.
 - [ ] Enter the command `npm install`.
 - [ ] Enter the command `docker-compose up -d`.
 - [ ] Enter the command `npm run migration:run`.
