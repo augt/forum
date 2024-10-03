@@ -9,7 +9,7 @@ import PublicationsList from "@/components/molecules/PublicationsList";
 import { CreatePublicationForm } from "@/components/molecules/CreatePublicationForm";
 
 export default function Home() {
-  const { authToken } = useContext(ConnectedUserContext);
+  const { authToken, isUserConnected } = useContext(ConnectedUserContext);
 
   const [publications, setPublications] = useState<PublicationType[]>([]);
 
@@ -47,10 +47,13 @@ export default function Home() {
           <SitePresentation />
         ) : (
           <>
-            <CreatePublicationForm
-              publications={publications}
-              setPublications={setPublications}
-            />
+            {isUserConnected && (
+              <CreatePublicationForm
+                publications={publications}
+                setPublications={setPublications}
+              />
+            )}
+
             <PublicationsList
               publications={publications}
               setPublications={setPublications}
