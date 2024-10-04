@@ -18,3 +18,7 @@ export const StyledInfoMessage = styled.div`
   text-align: center;
   margin-top: 10px;
 `;
+
+export const StyledApiResponseMessage = styled.div`
+  margin-top: 10px;
+`;

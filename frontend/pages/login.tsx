@@ -10,7 +10,7 @@ export default function Login() {
   const router = useRouter();
   const { setAuthToken, setConnectedUser, setIsUserConnected } =
     useContext(ConnectedUserContext);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
   async function handleLoginClick(email: string, password: string) {
     try {
       const response = await axios.post(
@@ -27,13 +27,13 @@ export default function Login() {
         setAuthToken(response.data.access_token);
         setConnectedUser(response.data.user);
         setIsUserConnected(true);
-        setErrorMessage(
+        setResponseMessage(
           "Connexion réussie, redirection vers le fil d'actualités !"
         );
         router.push("/");
       }
     } catch (error: any) {
-      setErrorMessage(error.response.data.message);
+      setResponseMessage(error.response.data.message);
     }
   }
   return (
@@ -44,7 +44,7 @@ export default function Login() {
       <main>
         <SignInSignUpForm
           handleSubmit={handleLoginClick}
-          errorMessage={errorMessage}
+          responseMessage={responseMessage}
           isLogInMode={true}
         />
       </main>

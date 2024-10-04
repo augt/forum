@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { InputContainer, StyledForm, StyledInfoMessage } from "./index.style";
+import {
+  InputContainer,
+  StyledApiResponseMessage,
+  StyledForm,
+  StyledInfoMessage,
+} from "./index.style";
 import { StyledButton } from "@/components/atoms/Button/index.style";
 import { StyledInput } from "@/components/atoms/Input/index.style";
 
@@ -10,13 +15,13 @@ type PropsTypes = {
     username?: string,
     group?: string
   ) => void;
-  errorMessage: string;
+  responseMessage: string;
   isLogInMode?: boolean;
 };
 
 export default function SignInSignUpForm({
   handleSubmit,
-  errorMessage,
+  responseMessage,
   isLogInMode,
 }: PropsTypes) {
   const [username, setUsername] = useState("");
@@ -83,12 +88,12 @@ export default function SignInSignUpForm({
           {isLogInMode ? "Connexion" : "Inscription"}
         </StyledButton>
       </StyledForm>
-      <div>{errorMessage}</div>
+      <StyledApiResponseMessage>{responseMessage}</StyledApiResponseMessage>
       {!isLogInMode && (
         <>
           <StyledInfoMessage>Informations utiles :</StyledInfoMessage>
           <StyledInfoMessage>
-            Vous pouvez choisir le groupe que vous souhaitez, si celui
+            Vous pouvez choisir le groupe que vous souhaitez, si celui-ci
             n&apos;existe pas encore, il sera créé automatiquement lors de votre
             inscription.
           </StyledInfoMessage>

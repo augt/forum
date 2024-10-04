@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useState } from "react";
 
 export default function SignUp() {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
   async function handleSignUpClick(
     email: string,
     password: string,
@@ -24,11 +24,11 @@ export default function SignUp() {
         }
       );
       if (response.status === 201)
-        setErrorMessage(
+        setResponseMessage(
           "Utilisateur créé, rendez-vous sur la page de connexion !"
         );
     } catch (error: any) {
-      setErrorMessage(error.response.data.message);
+      setResponseMessage(error.response.data.message);
     }
   }
   return (
@@ -39,7 +39,7 @@ export default function SignUp() {
       <main>
         <SignInSignUpForm
           handleSubmit={handleSignUpClick}
-          errorMessage={errorMessage}
+          responseMessage={responseMessage}
         />
       </main>
     </>
