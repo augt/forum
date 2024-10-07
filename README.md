@@ -1,3 +1,9 @@
+### Where can I try out this project ?
+
+This projet has been deployed at this address :
+
+[https://forum.augustint.ovh](https://forum.augustint.ovh)
+
 ### Description :
 
 This projet is a simple forum application, where users can sign up, sign in and create publications that are visible to other users. Users can interact vith the publications by liking or commenting them. Users can also edit their profiles.
