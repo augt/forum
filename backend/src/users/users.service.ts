@@ -78,15 +78,13 @@ export class UsersService {
   @Cron(CronExpression.EVERY_30_MINUTES, { name: 'delete_old_users' })
   async deleteOldUsers() {
     const users = await this.usersRepository.find();
-    return await this.usersRepository.remove(users);
-    /* const currentDate = new Date();
-    const difference = currentDate.getMinutes() - 10;
-    currentDate.setMinutes(difference);
-    currentDate.toISOString();
-    return await this.usersRepository
-      .createQueryBuilder('user')
-      .delete()
-      .where('user.createdAt <= :currentDate', { currentDate })
-      .execute(); */
+
+    const oldUsers = users.filter((user) => {
+      const userAccountCreationDate = new Date(user.createdAt);
+      const userAccountlifespan =
+        Date.now() - userAccountCreationDate.getTime();
+      return userAccountlifespan > 1800000;
+    });
+    return await this.usersRepository.remove(oldUsers);
   }
 }

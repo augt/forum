@@ -53,8 +53,7 @@ export function CreatePublicationForm({
   return (
     <StyledForm>
       <GreetingMessage>
-        Bonjour {connectedUser.username}, que pensez-vous de la situation en
-        général ?
+        Bonjour {connectedUser.username}, exprimez vous !
       </GreetingMessage>
       <label htmlFor="publicationTitle">Titre</label>
       <TitleTextInput

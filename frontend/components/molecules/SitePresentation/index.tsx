@@ -17,8 +17,9 @@ export default function SitePresentation() {
         vous.
       </InstructionsText>
       <InstructionsText>
-        Cette application étant déployée à des fins de démonstration, toutes les
-        données enregistrées sont supprimées toutes les 30 minutes.
+        Cette application étant déployée à des fins de démonstration, les
+        comptes utilisateurs et leurs données sont supprimés automatiquement 30
+        à 60 minutes après leur création.
       </InstructionsText>
       <InstructionsText>
         Veuillez vous inscrire si ce n&apos;est pas déjà fait, et vous connecter
