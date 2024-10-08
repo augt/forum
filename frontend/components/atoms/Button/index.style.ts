@@ -15,6 +15,7 @@ export const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: inherit;
 
   &:hover {
     cursor: pointer;

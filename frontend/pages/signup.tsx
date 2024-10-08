@@ -1,9 +1,15 @@
+import { ConnectedUserContext } from "@/components/Context";
 import SignInSignUpForm from "@/components/molecules/SignInSignUpForm";
 import axios from "axios";
+import { setCookie } from "cookies-next";
 import Head from "next/head";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useContext, useState } from "react";
 
 export default function SignUp() {
+  const router = useRouter();
+  const { setAuthToken, setConnectedUser, setIsUserConnected } =
+    useContext(ConnectedUserContext);
   const [responseMessage, setResponseMessage] = useState("");
   async function handleSignUpClick(
     email: string,
@@ -12,7 +18,7 @@ export default function SignUp() {
     group?: string
   ) {
     try {
-      const response = await axios.post(
+      const signUpResponse = await axios.post(
         `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
           process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
         }/users/signup`,
@@ -23,10 +29,26 @@ export default function SignUp() {
           password,
         }
       );
-      if (response.status === 201)
+      if (signUpResponse.status === 201)
         setResponseMessage(
-          "Utilisateur créé, rendez-vous sur la page de connexion !"
+          "Utilisateur créé avec succès, vous allez être connecté !"
         );
+
+      const loginResponse = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_SCHEME || "http"}://${
+          process.env.NEXT_PUBLIC_API_HOST || "localhost:3001"
+        }/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
+
+      setCookie("ForumAuthToken", loginResponse.data.access_token);
+      setAuthToken(loginResponse.data.access_token);
+      setConnectedUser(loginResponse.data.user);
+      setIsUserConnected(true);
+      router.push("/");
     } catch (error: any) {
       setResponseMessage(error.response.data.message);
     }

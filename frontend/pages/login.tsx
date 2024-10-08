@@ -11,6 +11,7 @@ export default function Login() {
   const { setAuthToken, setConnectedUser, setIsUserConnected } =
     useContext(ConnectedUserContext);
   const [responseMessage, setResponseMessage] = useState("");
+
   async function handleLoginClick(email: string, password: string) {
     try {
       const response = await axios.post(
