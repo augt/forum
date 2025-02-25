@@ -1,4 +1,4 @@
-Where can I try out this project ?
+### Where can I try out this project ?
 
 This projet has been deployed at this address :
 
@@ -6,7 +6,7 @@ This projet has been deployed at this address :
 
 ### Description :
 
-This projet is a simple forum application, where users can sign up, sign in and create publications that are visible to other users. Users can interact vith the publications by liking or commenting them. Users can also edit their profiles.
+This projet is a simple forum application, where users can sign up, sign in and create publications that are visible to other users. Users can interact with the publications by liking or commenting them. Users can also edit their profiles.
 
 This application is build with NextJS and styled-components on the front-end and uses NestJS with typeORM, postgreSQL and Docker on the back-end.
 
